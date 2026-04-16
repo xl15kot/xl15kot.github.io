@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TeaDevs</title>
+    <title>TeaDevs | Разработка</title>
     <style>
         * {
             margin: 0;
@@ -19,18 +19,120 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Анимированные частицы */
+        .particle {
+            position: fixed;
+            background: rgba(0, 255, 150, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-20vh) translateX(40px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         .container {
             text-align: center;
             padding: 20px;
-            animation: fadeIn 0.8s ease-out;
+            z-index: 2;
+            position: relative;
+            animation: containerFadeIn 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
 
-        @keyframes fadeIn {
+        @keyframes containerFadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Логотип-картинка */
+        .logo-img {
+            width: 90px;
+            height: auto;
+            margin-bottom: 12px;
+            display: inline-block;
+            animation: logoFloat 3s ease-in-out infinite, logoGlow 2s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 8px rgba(0,255,100,0.3));
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-8px) rotate(3deg);
+            }
+        }
+
+        @keyframes logoGlow {
+            from {
+                filter: drop-shadow(0 0 2px rgba(0,255,100,0.3));
+            }
+            to {
+                filter: drop-shadow(0 0 12px rgba(0,255,100,0.7));
+            }
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            background: linear-gradient(120deg, #E0E0E0, #AAFFCC);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: titleReveal 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes titleReveal {
+            from {
+                opacity: 0;
+                letter-spacing: 6px;
+                filter: blur(8px);
+            }
+            to {
+                opacity: 1;
+                letter-spacing: 2px;
+                filter: blur(0);
+            }
+        }
+
+        .tagline {
+            color: #6A7A8A;
+            font-size: 13px;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -38,74 +140,120 @@
             }
         }
 
-        .logo {
-            font-size: 70px;
-            margin-bottom: 12px;
-            display: inline-block;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
-        }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 500;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-            color: #E0E0E0;
-            animation: fadeIn 0.8s ease-out 0.1s both;
-        }
-
-        .tagline {
-            color: #6A7A8A;
-            font-size: 13px;
-            margin-bottom: 30px;
-            animation: fadeIn 0.8s ease-out 0.2s both;
-        }
-
         .btn {
             display: block;
             background: #1A2228;
             color: #E0E0E0;
-            padding: 10px 24px;
-            border-radius: 30px;
+            padding: 12px 24px;
+            border-radius: 40px;
             text-decoration: none;
-            font-size: 14px;
-            margin: 10px auto;
-            transition: all 0.2s ease;
-            border: none;
+            font-size: 15px;
+            margin: 14px auto;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            width: 250px;
+            border: 1px solid rgba(80, 180, 120, 0.2);
             cursor: pointer;
-            width: 200px;
-            animation: fadeIn 0.8s ease-out both;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out both;
         }
 
-        .btn:nth-child(1) { animation-delay: 0.3s; }
-        .btn:nth-child(2) { animation-delay: 0.4s; }
-        .btn:nth-child(3) { animation-delay: 0.5s; }
+        .btn:nth-child(1) { animation-delay: 0.4s; }
+        .btn:nth-child(2) { animation-delay: 0.5s; }
+        .btn:nth-child(3) { animation-delay: 0.6s; }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(0, 255, 150, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
 
         .btn:hover {
             background: #2A3A2A;
             color: #FFFFFF;
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0, 255, 100, 0.15);
+            transform: translateY(-3px) scale(1.02);
+            border-color: rgba(0, 255, 150, 0.6);
+            box-shadow: 0 8px 20px rgba(0, 255, 100, 0.2);
         }
 
         .btn:active {
-            transform: scale(0.98);
+            transform: translateY(1px) scale(0.98);
         }
 
         .footer {
             margin-top: 40px;
             color: #4A5A6A;
             font-size: 11px;
-            animation: fadeIn 0.8s ease-out 0.6s both;
+            animation: fadeInUp 0.6s ease-out 0.7s both;
+        }
+
+        /* Тост-уведомление */
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background: #1A2A24;
+            color: #AAFFCC;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            z-index: 1000;
+            opacity: 0;
+            animation: toastAppear 2s ease forwards;
+            border: 1px solid rgba(0,255,150,0.5);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        @keyframes toastAppear {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
+            15% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            85% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.9);
+                visibility: hidden;
+            }
+        }
+
+        .status-indicator {
+            position: fixed;
+            bottom: 42px;
+            right: 42px;
+            width: 10px;
+            height: 10px;
+            background: #4AEAA0;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #3cff9e;
+            animation: blinkGreen 1.5s infinite;
+            z-index: 2;
+        }
+
+        @keyframes blinkGreen {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 15px #3cff9e; }
         }
 
         /* Модальное окно */
@@ -116,19 +264,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            z-index: 1001;
         }
         .modal-content {
             background: #1A2228;
-            border-radius: 20px;
+            border-radius: 30px;
             padding: 30px;
-            min-width: 250px;
+            min-width: 280px;
             text-align: center;
             animation: fadeIn 0.2s ease;
             border: 1px solid #2A3A2A;
+            backdrop-filter: blur(8px);
         }
         .modal-content a {
             display: block;
@@ -136,7 +285,7 @@
             color: #E0E0E0;
             padding: 12px 20px;
             margin: 15px 0;
-            border-radius: 30px;
+            border-radius: 40px;
             text-decoration: none;
             transition: 0.2s;
         }
@@ -153,29 +302,41 @@
         .close-btn:hover {
             background: #AA3333;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
+    <div class="status-indicator"></div>
+
     <div class="container">
-        <div class="logo">🍵</div>
+        <!-- Логотип-картинка (замените ссылку на путь к вашему PNG) -->
+        <img src="tea.png" alt="Tea Logo" class="logo-img">
         <h1>TeaDevs</h1>
         <div class="tagline">code with tea</div>
-        <a href="https://t.me/TeaDevs_2026" class="btn">Telegram</a>
-        <button class="btn" id="projectsBtn">Проекты</button>
-        <a href="https://github.com/xl15kot" class="btn">GitHub</a>
-        <div class="footer">AveBas & LimuxMintREAL</div>
+
+        <button class="btn" id="projectsBtn">📦 Проекты</button>
+        <a href="https://t.me/TeaDevs_2026" class="btn" target="_blank">📱 Telegram</a>
+        <a href="https://github.com/xl15kot" class="btn" target="_blank">🐙 GitHub</a>
+
+        <div class="footer">
+            AveBas & LimuxMintREAL
+        </div>
     </div>
 
     <!-- Модальное окно -->
     <div id="modal" class="modal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 16px;">📦 Проекты</h3>
-            <a href="https://github.com/xl15kot/T.UserBot_Reborn" target="_blank">🤖 T.UserBot</a>
+            <h3 style="margin-bottom: 16px;">📦 Наши проекты</h3>
+            <a href="https://github.com/xl15kot/T.UserBot_Reborn" target="_blank">🤖 T.UserBot Reborn</a>
             <button class="btn close-btn" id="closeModal">Закрыть</button>
         </div>
     </div>
 
     <script>
+        // Модальное окно
         const modal = document.getElementById('modal');
         const projectsBtn = document.getElementById('projectsBtn');
         const closeModal = document.getElementById('closeModal');
@@ -189,6 +350,29 @@
         modal.onclick = (e) => {
             if (e.target === modal) modal.style.display = 'none';
         };
+
+        // Создание анимированных частиц
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 4 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = Math.random() * 8 + 6 + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.opacity = Math.random() * 0.4 + 0.1;
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 14000);
+        }
+
+        setInterval(createParticle, 400);
+        for (let i = 0; i < 15; i++) {
+            setTimeout(() => createParticle(), i * 150);
+        }
     </script>
 </body>
 </html>
